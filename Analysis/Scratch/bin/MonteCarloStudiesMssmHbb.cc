@@ -24,14 +24,14 @@ int main(int argc, char * argv[])
    std::string inputList = "rootFileList.txt";
    MssmHbb analysis(inputList);
    
-   std::string atype = "Jet";
-   analysis.addTree<Jet>    ("Jets"    , "MssmHbb/Events/slimmedJetsPuppi"              );
-   analysis.addTree<Muon>   ("Muons"   , "MssmHbb/Events/slimmedMuons"                  );
-   analysis.addTree<MET>    ("METs"    , "MssmHbb/Events/slimmedMETsPuppi"              ); 
-   analysis.addTree<Vertex> ("Vertices", "MssmHbb/Events/offlineSlimmedPrimaryVertices" ); 
-   analysis.addTree<GenParticle> ("GenParticles", "MssmHbb/Events/prunedGenParticles"   ); 
-   analysis.addTree<Candidate>   ("MuonCands"   , "MssmHbb/Events/slimmedMuons"                  );
+   // Input collections
+   analysis.addTree<Jet>         ("Jets"        , "MssmHbb/Events/slimmedJetsPuppi"              );
+   analysis.addTree<Muon>        ("Muons"       , "MssmHbb/Events/slimmedMuons"                  );
+   analysis.addTree<MET>         ("METs"        , "MssmHbb/Events/slimmedMETsPuppi"              ); 
+   analysis.addTree<Vertex>      ("Vertices"    , "MssmHbb/Events/offlineSlimmedPrimaryVertices" ); 
+   analysis.addTree<GenParticle> ("GenParticles", "MssmHbb/Events/prunedGenParticles"            ); 
    
+   // Histograms
    TH1F * h_njets_closeToLeading = new TH1F("h_njets_closeToLeading","",10,0,10);
    TH1F * h_ptjet_closeToLeading = new TH1F("h_ptjet_closeToLeading","",200,0,1000);
    
@@ -54,9 +54,6 @@ int main(int argc, char * argv[])
    for ( int i = 0 ; i < analysis.size() ; ++i )
    {
       analysis.event(i);
-      
-      // Muon Candidate
-      auto muonCands = analysis.collection<Candidate>("MuonCands");
       
       // GenParticles
       auto genParticles = analysis.collection<GenParticle>("GenParticles");
